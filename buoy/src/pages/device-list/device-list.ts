@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-// import { Observable } from '@firebase/util';
 import { Observable } from 'rxjs/observable';
 import { Device } from '../../model/device.model';
 import { DeviceProvider } from '../../providers/device/device';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
-/**
- * Generated class for the DeviceListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
 
 @IonicPage()
 @Component({
   selector: 'page-device-list',
   templateUrl: 'device-list.html',
 })
-export class DeviceListPage implements OnInit {
+export class DeviceListPage {
 
   deviceList$ : Observable<Device[]>;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private deviceProvider: DeviceProvider) {
-  }
 
- ngOnInit() {
+  me$ : string = '1garry8@gmail.com';
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private deviceProvider: DeviceProvider,
+    private afDatabase : AngularFireDatabase,
+    private afAuth : AngularFireAuth
+  ) {
   this.deviceList$ = this.deviceProvider
   .getDevice()
   .snapshotChanges()
@@ -33,12 +36,12 @@ export class DeviceListPage implements OnInit {
         key:c.payload.key,
         ...c.payload.val(),
       }));
-    });
+    });   
+  }
 
-    console.log(this.deviceList$.subscribe((ret)=>{
-      return ret;
-    }))
-   
- }
+
+
+
+  //this.me$ = this.afAuth.authState.subscribe()
 
 }

@@ -11,7 +11,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Injectable()
 export class DeviceProvider {
 
-  private deviceListReference = this.afDatabase.list<Device>('device');
+  private deviceListReference = this.afDatabase.list<Device>('devices');
 
   constructor(private afDatabase : AngularFireDatabase) {
     console.log('Hello DeviceProvider Provider');

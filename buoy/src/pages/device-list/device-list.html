@@ -6,20 +6,24 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>DeviceOwned</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>DeviceOwned</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<ion-list>
-  <ion-list-header>
-    device :
-  </ion-list-header>
-  <ion-item *ngFor="let device of deviceList$ | async">
-{{device}}
-  </ion-item>
-</ion-list>
+
+    <ion-list>
+        <ion-list-header>
+            Device:{{me$}}
+        </ion-list-header>
+        <ion-item *ngFor="let item of deviceList$ | async ">
+            <h2 *ngIf="item.email ===  me$"> {{item.email}}
+            </h2>
+
+        </ion-item>
+    </ion-list>
+
 </ion-content>
