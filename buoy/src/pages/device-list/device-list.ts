@@ -16,7 +16,7 @@ export class DeviceListPage {
 
   deviceList$ : Observable<Device[]>;
 
-  me$ : any ;//= '1garry8@gmail.com';
+  me$ : string ;//= '1garry8@gmail.com';
 
   constructor(
     public navCtrl: NavController,
