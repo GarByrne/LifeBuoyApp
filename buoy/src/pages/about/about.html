@@ -1,11 +1,17 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            About
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+    {{long}}
+    <br>
+    <br> {{lat}}
+
+    <button (click)="getLocation()">CLICK!!!</button>
 
 </ion-content>

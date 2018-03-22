@@ -45,7 +45,4 @@ export class DeviceListPage {
   }
 
 
-
-  //this.me$ = this.afAuth.authState.subscribe()
-
 }
