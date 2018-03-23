@@ -7,8 +7,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
-
-
 @IonicPage()
 @Component({
   selector: 'page-device-list',
@@ -18,7 +16,7 @@ export class DeviceListPage {
 
   deviceList$ : Observable<Device[]>;
 
-  me$ : string = '1garry8@gmail.com';
+  me$ : string ;//= '1garry8@gmail.com';
 
   constructor(
     public navCtrl: NavController,
@@ -27,6 +25,7 @@ export class DeviceListPage {
     private afDatabase : AngularFireDatabase,
     private afAuth : AngularFireAuth
   ) {
+
   this.deviceList$ = this.deviceProvider
   .getDevice()
   .snapshotChanges()
@@ -37,11 +36,13 @@ export class DeviceListPage {
         ...c.payload.val(),
       }));
     });   
+
+    //gets the current user email
+    this.me$ = this.afAuth.auth.currentUser.email;
+    console.log(this.me$);
+
+
   }
 
-
-
-
-  //this.me$ = this.afAuth.authState.subscribe()
 
 }

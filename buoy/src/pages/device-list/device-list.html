@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>DeviceOwned</ion-title>
+        <ion-title>Device Owned </ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -17,10 +17,10 @@
 
     <ion-list>
         <ion-list-header>
-            Device:{{me$}}
+            Current User:{{me$}}
         </ion-list-header>
         <ion-item *ngFor="let item of deviceList$ | async ">
-            <h2 *ngIf="item.email ===  me$"> {{item.email}}
+            <h2 *ngIf="item.email ===  me$"> Device ID: {{item.device}}
             </h2>
 
         </ion-item>
