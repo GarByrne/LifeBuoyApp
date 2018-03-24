@@ -7,24 +7,25 @@
 <ion-header>
 
     <ion-navbar>
-      <ion-title>Login</ion-title>
+        <ion-title>Login</ion-title>
     </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content padding>
+
+</ion-header>
+
+
+<ion-content padding>
     <ion-item>
-      <ion-label>Email Address</ion-label>
-      <ion-input type = "email" [(ngModel)]="user.email"> </ion-input>
+        <ion-label color="primary" floating>Email Address</ion-label>
+        <ion-input clearInput type="email" [(ngModel)]="user.email"></ion-input>
     </ion-item>
-  
+
     <ion-item>
-        <ion-label>Password</ion-label>
-        <ion-input type = "password" [(ngModel)]="user.password"></ion-input>
-      </ion-item>
-  
-      <button (click) = "registerPage()">Register</button>
-      <button (click) = "loginUser(User)">Login</button>
-  
-  </ion-content>
+        <ion-label color="primary" floating>Password</ion-label>
+        <ion-input clearInput type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+
+    <button ion-button full (click)="loginUser(User)">Login</button>
+    <button ion-button full (click)="registerPage()">Register</button>
+
+
+</ion-content>
