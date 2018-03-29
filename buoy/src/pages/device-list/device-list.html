@@ -16,13 +16,14 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-list-header>
-            Current User:{{me$}}
-        </ion-list-header>
-        <ion-item *ngFor="let item of deviceList$ | async ">
-            <h2 *ngIf="item.email ===  me$"> Device ID: {{item.device}}
-            </h2>
 
+        <ion-list-header>
+            Devices Owned By : {{me$}}
+        </ion-list-header>
+
+        <ion-item *ngFor="let d of deviceList$ | async">
+            <ion-item detail-push navPush="EditDevicePage" [navParams]="{d:d}" *ngIf="d.email ===  me$"> Device ID: {{d.device}}
+            </ion-item>
         </ion-item>
     </ion-list>
 
