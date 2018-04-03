@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -20,14 +19,11 @@ import { DeviceProvider } from '../providers/device/device';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DeviceListPage } from '../pages/device-list/device-list';
 import { Geolocation } from '@ionic-native/geolocation';
-// import { Geolocation } from '@ionic-native/geolocation';
 
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     RegisterPage,
     LoginPage,
@@ -40,13 +36,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     AngularFireModule.initializeApp(Firebase_config),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-  //  Geolocation
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     RegisterPage,
     LoginPage,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Platform } from 'ionic-angular';
 
 
 @Component({
@@ -14,32 +15,24 @@ lat:number ;
 
   constructor(
     public navCtrl: NavController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private platform: Platform
   ) { }
 
 
 
-  
-
-  getLocation(){
-this.geolocation.getCurrentPosition().then((resp) => {
-     resp.coords.latitude
-     resp.coords.longitude
-   }).catch((error) => {
+  getLocation() {
+    this.platform.ready().then(()=>{
+        this.geolocation.getCurrentPosition().then((resp) => {
+   this.lat = resp.coords.latitude;
+   this.long = resp.coords.longitude;
+   console.log(this.lat,this.long);
+ }).catch((error) => {
      console.log('Error getting location', error);
-   });
-   
-   let watch = this.geolocation.watchPosition();
-   watch.subscribe((data) => {
-    // data can be a set of coordinates, or an error (if an error occurred).
-     data.coords.latitude
-    this.long = data.coords.longitude;
-    this.lat = data.coords.latitude;
-   });
+ });
+    })
+ }
 
-   console.log(this.long);
-   console.log(this.lat);
-
-}
+ 
 
 }

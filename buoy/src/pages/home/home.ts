@@ -6,9 +6,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../model/user.model';
 import { LoginPage } from '../login/login';
+import { Platform } from 'ionic-angular';
 
 
 declare var google;
+
 
 @Component({
   selector: 'home-page',
@@ -23,7 +25,8 @@ export class HomePage {
 
   constructor( public geolocation: Geolocation,
     public navCtrl: NavController,
-    private afAuth : AngularFireAuth
+    private afAuth : AngularFireAuth,
+    private platform: Platform
   ) {}
 
   ionViewDidLoad(){
@@ -32,25 +35,35 @@ export class HomePage {
      this.loadMap();
    })
   }
+  
   register(){
     
     this.navCtrl.push(RegisterPage);
 
   }
 
-
  
   loadMap(){
  
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
- 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
- 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.platform.ready().then(()=>{
+      this.geolocation.getCurrentPosition().then((resp) => {
+
+
+
+ let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+ let mapOptions = {
+   center: latLng,
+   zoom: 15,
+   mapTypeId: google.maps.MapTypeId.ROADMAP
+ }
+
+ this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+}).catch((error) => {
+   console.log('Error getting location', error);
+});
+  })
+
  
   }
 
