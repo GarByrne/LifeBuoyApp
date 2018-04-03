@@ -1,16 +1,13 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
-import { AboutPage } from '../about/about';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../model/user.model';
 import { LoginPage } from '../login/login';
 import { Platform } from 'ionic-angular';
 
-
 declare var google;
-
 
 @Component({
   selector: 'home-page',
