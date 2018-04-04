@@ -6,6 +6,15 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../model/user.model';
 import { LoginPage } from '../login/login';
 import { Platform } from 'ionic-angular';
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker
+ } from '@ionic-native/google-maps';
 
 declare var google;
 
@@ -54,7 +63,16 @@ export class HomePage {
    mapTypeId: google.maps.MapTypeId.ROADMAP
  }
 
+
  this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+ let marker = new google.maps.Marker({
+  map: this.map,
+  animation: google.maps.Animation.DROP,
+  position: latLng,
+  icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+});
+    let content = "<h4>Current Location</h4>";         
+    this.addInfoWindow(marker, content);
 
 }).catch((error) => {
    console.log('Error getting location', error);
@@ -62,6 +80,34 @@ export class HomePage {
   })
 
  
+  }
+
+
+  addMarker(){
+ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter(),
+      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+    });
+   
+    //let content = "<h4>Information!</h4>";         
+   
+    //this.addInfoWindow(marker, content);
+   
+  }
+
+  addInfoWindow(marker, content){
+ 
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+   
   }
 
 

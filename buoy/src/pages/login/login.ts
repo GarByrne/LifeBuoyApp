@@ -5,13 +5,6 @@ import { User } from '../../model/user.model';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-login',
