@@ -138,9 +138,6 @@ export class HomePage implements OnInit {
 
       })
 
-    // let content = "<h4>Current Location</h4>";         
-    // this.addInfoWindow(marker, content);
-
 })})
 
 
