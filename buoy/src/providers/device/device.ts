@@ -14,14 +14,16 @@ export class DeviceProvider {
   private deviceListReference = this.afDatabase.list<Device>('devices');
 
   constructor(private afDatabase : AngularFireDatabase) {
-    console.log('Hello DeviceProvider Provider');
+   // console.log('Hello DeviceProvider Provider');
   }
 
   getDevice(){
     console.log(this.deviceListReference);
     return this.deviceListReference;
+  }
 
-
+  updateDevice(device: Device){
+    return this.deviceListReference.update(device.key, device);
   }
 
 }
