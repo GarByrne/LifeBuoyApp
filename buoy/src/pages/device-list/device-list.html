@@ -21,10 +21,11 @@
             Devices Owned By : {{me$}}
         </ion-list-header>
 
-        <ion-item *ngFor="let d of deviceList$ | async">
+        <ng-container *ngFor="let d of deviceList$ | async">
             <ion-item detail-push navPush="EditDevicePage" [navParams]="{d:d}" *ngIf="d.email ===  me$"> Device ID: {{d.device}}
             </ion-item>
-        </ion-item>
+
+        </ng-container>
     </ion-list>
 
 </ion-content>

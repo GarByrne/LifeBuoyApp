@@ -10,4 +10,20 @@
 </ion-buttons>
 <ion-content>
   <div #map id="map"></div> 
+
+  <ion-list no-lines>
+
+    <ion-list-header>
+        Devices Owned By : {{me$}}
+    </ion-list-header>
+
+    <ng-container *ngFor="let d of deviceList$ | async">
+        <ion-item detail-push navPush="EditDevicePage" [navParams]="{d:d}" *ngIf="d.email ===  me$"> Device ID: {{d.device}}
+          {{d.lat}}
+        </ion-item>
+        <!-- <ion-item>
+          {{d.lat}}
+      </ion-item> -->
+    </ng-container>
+</ion-list>
 </ion-content>

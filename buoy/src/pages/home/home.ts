@@ -1,10 +1,11 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../model/user.model';
 import { LoginPage } from '../login/login';
+import { DeviceProvider } from '../../providers/device/device';
 import { Platform } from 'ionic-angular';
 import {
   GoogleMaps,
@@ -15,6 +16,8 @@ import {
   MarkerOptions,
   Marker
  } from '@ionic-native/google-maps';
+import { Observable } from 'rxjs/Observable';
+import { Device } from '../../model/device.model';
 
 declare var google;
 
@@ -22,9 +25,15 @@ declare var google;
   selector: 'home-page',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   nowUser : string;
+  deviceList$ : Observable<Device[]>;
+  me$ : string ;
+  cord: any;
+  lat: any;
+  long: any;
+  dID: any;
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -32,23 +41,78 @@ export class HomePage {
   constructor( public geolocation: Geolocation,
     public navCtrl: NavController,
     private afAuth : AngularFireAuth,
-    private platform: Platform
+    private platform: Platform,
+    private deviceProvider: DeviceProvider,
+
   ) {}
 
-  ionViewDidLoad(){
-   this.afAuth.authState.subscribe((res)=>{
-     console.log(res);
-     this.loadMap();
-   })
-  }
-  
-  register(){
-    
-    this.navCtrl.push(RegisterPage);
+  ngOnInit(){
+    this.afAuth.authState.subscribe((res)=>{
+      
+      this.me$ = this.afAuth.auth.currentUser.email;
+      console.log(this.me$);
+            
+        });
 
-  }
+        this.loadMap();
+
+      this.deviceList$ = this.deviceProvider
+      .getDevice()
+      .snapshotChanges()
+      .map(
+        changes => {
+          return changes.map(c=>({
+            key:c.payload.key,
+            ...c.payload.val(),
+          }));
+        });   
+        this.deviceList$.subscribe(cord=>{
+          
+        cord.forEach(function(snap) {
+          var lat = snap.lat;
+          var lng = snap.lng;
+          var dID = snap.device;
+          //this.test = this.me$;
+         // console.log(this.test , "test");
+
+          if(snap.email === "1garry8@gmail.com")
+          {
+
+            var myLatLng = {lat, lng};
 
  
+          let marker = new google.maps.Marker({
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            position: myLatLng,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+          });
+             
+              //let content = "<h4>Information!</h4>";         
+             
+              //this.addInfoWindow(marker, content);
+             
+            
+          }
+
+          
+            });
+
+
+        //gets the current user email
+        this.me$ = this.afAuth.auth.currentUser.email;
+        console.log(this.me$);
+    })
+    
+  }
+
+  // ionViewDidLoad(){
+  // //  this.afAuth.authState.subscribe((res)=>{
+  // //    console.log(res);
+  // //    this.loadMap();
+  //  })
+  // }
+  
   loadMap(){
  
     this.platform.ready().then(()=>{
@@ -83,20 +147,20 @@ export class HomePage {
   }
 
 
-  addMarker(){
+  // addMarker(lat,lng,device){
  
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter(),
-      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-    });
+  //   let marker = new google.maps.Marker({
+  //     map: this.map,
+  //     animation: google.maps.Animation.DROP,
+  //     position: this.map.getCenter(),
+  //     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+  //   });
    
-    //let content = "<h4>Information!</h4>";         
+  //   //let content = "<h4>Information!</h4>";         
    
-    //this.addInfoWindow(marker, content);
+  //   //this.addInfoWindow(marker, content);
    
-  }
+  // }
 
   addInfoWindow(marker, content){
  

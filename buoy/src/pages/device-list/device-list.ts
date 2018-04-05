@@ -12,7 +12,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   selector: 'page-device-list',
   templateUrl: 'device-list.html',
 })
-export class DeviceListPage {
+export class DeviceListPage implements OnInit{
 
   deviceList$ : Observable<Device[]>;
 
@@ -24,8 +24,9 @@ export class DeviceListPage {
     private deviceProvider: DeviceProvider,
     private afDatabase : AngularFireDatabase,
     private afAuth : AngularFireAuth
-  ) {
+  ) { }
 
+ngOnInit(){
   this.deviceList$ = this.deviceProvider
   .getDevice()
   .snapshotChanges()
@@ -40,9 +41,14 @@ export class DeviceListPage {
     //gets the current user email
     this.me$ = this.afAuth.auth.currentUser.email;
     console.log(this.me$);
+    console.log(this.deviceList$);
+
+}
 
 
-  }
+
+
+  
 
 
 }
