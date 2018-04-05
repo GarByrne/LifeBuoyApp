@@ -14,16 +14,15 @@
   <ion-list no-lines>
 
     <ion-list-header>
-        Devices Owned By : {{me$}}
+        Devices Owned By : {{lats}}
+        
     </ion-list-header>
 
     <ng-container *ngFor="let d of deviceList$ | async">
         <ion-item detail-push navPush="EditDevicePage" [navParams]="{d:d}" *ngIf="d.email ===  me$"> Device ID: {{d.device}}
           {{d.lat}}
         </ion-item>
-        <!-- <ion-item>
-          {{d.lat}}
-      </ion-item> -->
+
     </ng-container>
 </ion-list>
 </ion-content>

@@ -20,6 +20,8 @@ import { Observable } from 'rxjs/Observable';
 import { Device } from '../../model/device.model';
 
 declare var google;
+var details;
+var array1 = [];
 
 @Component({
   selector: 'home-page',
@@ -34,6 +36,10 @@ export class HomePage implements OnInit {
   lat: any;
   long: any;
   dID: any;
+  lats : string;
+  latlng : any;
+  
+
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -50,59 +56,13 @@ export class HomePage implements OnInit {
     this.afAuth.authState.subscribe((res)=>{
       
       this.me$ = this.afAuth.auth.currentUser.email;
-      console.log(this.me$);
+      
             
         });
 
-        this.loadMap();
+      this.loadMap();
 
-      this.deviceList$ = this.deviceProvider
-      .getDevice()
-      .snapshotChanges()
-      .map(
-        changes => {
-          return changes.map(c=>({
-            key:c.payload.key,
-            ...c.payload.val(),
-          }));
-        });   
-        this.deviceList$.subscribe(cord=>{
-          
-        cord.forEach(function(snap) {
-          var lat = snap.lat;
-          var lng = snap.lng;
-          var dID = snap.device;
-          //this.test = this.me$;
-         // console.log(this.test , "test");
-
-          if(snap.email === "1garry8@gmail.com")
-          {
-
-            var myLatLng = {lat, lng};
-
- 
-          let marker = new google.maps.Marker({
-            map: this.map,
-            animation: google.maps.Animation.DROP,
-            position: myLatLng,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-          });
-             
-              //let content = "<h4>Information!</h4>";         
-             
-              //this.addInfoWindow(marker, content);
-             
-            
-          }
-
-          
-            });
-
-
-        //gets the current user email
-        this.me$ = this.afAuth.auth.currentUser.email;
-        console.log(this.me$);
-    })
+      
     
   }
 
@@ -118,49 +78,77 @@ export class HomePage implements OnInit {
     this.platform.ready().then(()=>{
       this.geolocation.getCurrentPosition().then((resp) => {
 
+      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      let mapOptions = 
+      {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions); 
 
 
- let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
- let mapOptions = {
-   center: latLng,
-   zoom: 15,
-   mapTypeId: google.maps.MapTypeId.ROADMAP
- }
+      this.deviceList$ = this.deviceProvider
+      .getDevice()
+      .snapshotChanges()
+      .map(
+        changes => {
+          return changes.map(c=>({
+            key:c.payload.key,
+            ...c.payload.val(),
+          }));
+        }); 
+      
+        this.deviceList$.subscribe(cord=>{
+          
+          cord.forEach(function(snap) {
+            var lat = snap.lat;
+            var lng = snap.lng;
+            var dID = snap.device;
 
 
- this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
- let marker = new google.maps.Marker({
-  map: this.map,
-  animation: google.maps.Animation.DROP,
-  position: latLng,
-  icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
-});
-    let content = "<h4>Current Location</h4>";         
-    this.addInfoWindow(marker, content);
+            if(snap.email === "1garry8@gmail.com")
+            {
+              details = {
+                lat: lat,
+                lng: lng,
+                dID: dID
+              };
+              
+              array1.push(details);
+            }
+          });
 
-}).catch((error) => {
-   console.log('Error getting location', error);
-});
-  })
+        for(let i=0; i<array1.length; i++){
+      
+          var lats =  array1[i].lat;
+          var lngs = array1[i].lng;
+
+          let latLng = new google.maps.LatLng(array1[i].lat, array1[i].lng);
+            let marker = new google.maps.Marker({
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            position: latLng,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+          });
+              let content = `<h4>${array1[i].dID}</h4>`;         
+              this.addInfoWindow(marker, content);
+      }
+
+      })
+
+    // let content = "<h4>Current Location</h4>";         
+    // this.addInfoWindow(marker, content);
+
+})})
+
+
+  
 
  
   }
 
-
-  // addMarker(lat,lng,device){
- 
-  //   let marker = new google.maps.Marker({
-  //     map: this.map,
-  //     animation: google.maps.Animation.DROP,
-  //     position: this.map.getCenter(),
-  //     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-  //   });
-   
-  //   //let content = "<h4>Information!</h4>";         
-   
-  //   //this.addInfoWindow(marker, content);
-   
-  // }
 
   addInfoWindow(marker, content){
  
