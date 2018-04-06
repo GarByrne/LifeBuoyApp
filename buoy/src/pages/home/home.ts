@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
   ngOnInit(){
     this.afAuth.authState.subscribe((res)=>{
       
-      this.me$ = this.afAuth.auth.currentUser.email;
+     this.me$ = this.afAuth.auth.currentUser.email;
       
             
         });
