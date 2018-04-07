@@ -49,8 +49,8 @@ export class EditDevicePage implements OnInit {
      // data can be a set of coordinates, or an error (if an error occurred).
       data.coords.latitude
       //sets the value of the update variables 
-   this.currentLat = data.coords.longitude;
-   this.currentLong = data.coords.latitude;
+   this.currentLat = data.coords.latitude;
+   this.currentLong = data.coords.longitude;
     });
     
   }
@@ -61,6 +61,18 @@ export class EditDevicePage implements OnInit {
     // this is just setting them to change 
     this.device.lat = this.currentLat;
     this.device.lng = this.currentLong;
+    //function in th provider
+    //updating this instance of device
+    this.deviceProvider.updateDevice(this.device).then(()=>{
+      //put in a toast message here to let them know it was updated
+    }).then(()=>{
+      //navigate back to the map maybe
+    })
+  }
+
+  resetAlarm()
+  {
+    this.device.alarm = "0";
     //function in th provider
     //updating this instance of device
     this.deviceProvider.updateDevice(this.device).then(()=>{

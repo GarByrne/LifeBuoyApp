@@ -106,6 +106,7 @@ export class HomePage implements OnInit {
             var lat = snap.lat;
             var lng = snap.lng;
             var dID = snap.device;
+            var alrm = snap.alarm;
 
 
             if(snap.email === "1garry8@gmail.com")
@@ -113,7 +114,8 @@ export class HomePage implements OnInit {
               details = {
                 lat: lat,
                 lng: lng,
-                dID: dID
+                dID: dID,
+                alrm: alrm
               };
               
               array1.push(details);
@@ -125,15 +127,33 @@ export class HomePage implements OnInit {
           var lats =  array1[i].lat;
           var lngs = array1[i].lng;
 
-          let latLng = new google.maps.LatLng(array1[i].lat, array1[i].lng);
+          console.log(array1[i].alrm);
+          if(array1[i].alrm === "0")
+          {
+            let latLng = new google.maps.LatLng(array1[i].lat, array1[i].lng);
             let marker = new google.maps.Marker({
             map: this.map,
             animation: google.maps.Animation.DROP,
             position: latLng,
             icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
           });
-              let content = `<h4>${array1[i].dID}</h4>`;         
-              this.addInfoWindow(marker, content);
+          let content = `<h4>${array1[i].dID}</h4>`;         
+          this.addInfoWindow(marker, content);
+          }
+          else{
+            let latLng = new google.maps.LatLng(array1[i].lat, array1[i].lng);
+            let marker = new google.maps.Marker({
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            position: latLng,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+          });
+          let content = `<h4>${array1[i].dID}</h4>`;         
+          this.addInfoWindow(marker, content);
+          }
+
+
+
       }
 
       })

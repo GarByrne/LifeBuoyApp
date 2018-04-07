@@ -9,30 +9,17 @@
 
 <ion-content padding>
     <ion-card>
-        {{currentLat}} {{currentLong}}
+        Your current Latitude : {{currentLat}} 
+        <br>Your current Longtitude : {{currentLong}}
 
-        <br>{{device.key}}
-        <br>{{device.data}}
-        <br> {{device.device}}
-        <br> {{device.email}}
-        <br> {{device.lat}}
-        <br> {{device.lng}}
-        <br> {{device.seqNumber}}
-        <br> {{device.station}}
-        <br> {{device.time}}
+        <br> Device ID : {{device.device}}
+        <br> Device Latitude : {{device.lat}}
+        <br> Device Longtitude :{{device.lng}}
+        <br> Alarm :{{device.alarm}}
+
         <br>
 
-
-        <!-- <ion-item>
-            <ion-label>Lat</ion-label>
-            <ion-input [(ngModel)]="device.lat" placeholder="Lat">{{currentLat}}</ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Long</ion-label>
-            <ion-input [(ngModel)]="device.lng" placeholder="Long"></ion-input>
-        </ion-item> -->
-
         <button ion-button outline item-end icon-left (click)="update()">Update Position</button>
+        <button ion-button outline item-end icon-left (click)="resetAlarm()">Reset Alarm</button>
     </ion-card>
 </ion-content>
