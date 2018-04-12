@@ -5,9 +5,9 @@ import { Device } from '../../model/device.model';
 import { DeviceProvider } from '../../providers/device/device';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
 
 
-@IonicPage()
 @Component({
   selector: 'page-device-list',
   templateUrl: 'device-list.html',
@@ -18,13 +18,49 @@ export class DeviceListPage implements OnInit{
 
   me$ : string ;//= '1garry8@gmail.com';
 
+  public countryList:Array<any>;
+public loadedCountryList:Array<any>;
+
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private deviceProvider: DeviceProvider,
     private afDatabase : AngularFireDatabase,
     private afAuth : AngularFireAuth
-  ) { }
+  ) { 
+  }
+  
+  initializeItems(): void {
+    this.countryList = this.loadedCountryList;
+  }
+
+
+  getItems(searchbar) {
+    // Reset items back to all of the items
+    this.initializeItems();
+  
+    // set q to the value of the searchbar
+    var q = searchbar.srcElement.value;
+  
+  
+    // if the value is an empty string don't filter the items
+    if (!q) {
+      return;
+    }
+  
+    this.countryList = this.countryList.filter((v) => {
+      if(v.device && q) {
+        if (v.device.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  
+    console.log(q, this.countryList.length);
+  
+  }
 
 ngOnInit(){
   this.deviceList$ = this.deviceProvider
@@ -36,7 +72,26 @@ ngOnInit(){
         key:c.payload.key,
         ...c.payload.val(),
       }));
-    });   
+    });  
+    
+    
+    this.deviceList$.subscribe(cord=>{
+      let countries = []; 
+      cord.forEach(function(snap) {
+
+        
+        countries.push(snap);
+        return false;
+     
+          
+          
+        
+      });
+      console.log(countries);
+      this.countryList = countries;
+      this.loadedCountryList = countries;
+    });
+
 
     //gets the current user email
     this.me$ = this.afAuth.auth.currentUser.email;

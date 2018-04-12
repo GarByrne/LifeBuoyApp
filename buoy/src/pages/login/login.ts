@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { User } from '../../model/user.model';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -12,10 +12,27 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
 
+  
   user = {} as User;
   errorMessage;
+  loggedIn;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth:AngularFireAuth) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth:AngularFireAuth, public toastCtrl:ToastController ) {
+  }
+  ngOnInit() {
+    this.loggedIn = this.afAuth.authState.subscribe((data)=>{
+      if(data) {
+        // User is signed in.
+        console.log('is user');
+          this.navCtrl.setRoot(TabsPage);
+        
+      }else{
+        console.log('is not user')
+        // No user is signed in.
+      }
+  
+    });
+  
   }
 
 
@@ -31,24 +48,29 @@ export class LoginPage {
 
 
   //fix to the login 
-  loginUser() {
-    this.afAuth.auth.signInWithEmailAndPassword(this.user.email.valueOf(), this.user.password.valueOf())
-    .then(data =>{
-      if(data){
-        console.log('Here');
+  loginUser(user: User) {
+    this.afAuth.auth.signInWithEmailAndPassword(user.email.valueOf(), user.password.valueOf())
+    .then( () => {
+      console.log( 'Success');
+      console.log('Found You');
+      
         this.navCtrl.setRoot(TabsPage);
-      }else{
-        console.log( Error , 'Not Here');
-      }
-    },
-              error => {
-                  this.errorMessage = (<any>error);
-  
-                  // Here you can show a toast when an error has ocurred!
-                  // ...
-                  console.log('there has been an error here')
-  
-              });  
+      
+      //success
+    }, (err) => {
+      // Do something with error
+      console.log(err.message, 'failed');
+      console.log('Nobodys here');
+      let toast = this.toastCtrl.create({
+        message: `Woops!!!!!!!!!!! 
+        Something has gone wrong, Try entering the information again?`,
+        duration: 6000,
+        position: 'bottom',
+        showCloseButton: true,
+        dismissOnPageChange: true,
+      });
+      toast.present();
+    })
   }
 
 }

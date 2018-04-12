@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Device } from '../../model/device.model';
 import { DeviceProvider } from '../../providers/device/device';
 import { Geolocation } from '@ionic-native/geolocation';
-
-
+import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -19,7 +19,6 @@ export class EditDevicePage implements OnInit {
   currentLat : any;
   currentLong : any;
 
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,10 +31,6 @@ export class EditDevicePage implements OnInit {
   }
 
   ngOnInit() {
-//might be an issue with getting the gps cords like this, could be beter to 
-// getGPD(){
-      // From the html button then another button then update
-// }
 
     this.geolocation.getCurrentPosition().then((resp) => {
       resp.coords.latitude
@@ -47,30 +42,31 @@ export class EditDevicePage implements OnInit {
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
      // data can be a set of coordinates, or an error (if an error occurred).
-      data.coords.latitude
+      //data.coords.latitude
       //sets the value of the update variables 
    this.currentLat = data.coords.latitude;
    this.currentLong = data.coords.longitude;
+   console.log(this.currentLong);
     });
-    
   }
 
   update() {
-    console.log('function');
 
     // this is just setting them to change 
     this.device.lat = this.currentLat;
     this.device.lng = this.currentLong;
+    
     //function in th provider
     //updating this instance of device
     this.deviceProvider.updateDevice(this.device).then(()=>{
       //put in a toast message here to let them know it was updated
     }).then(()=>{
-      //navigate back to the map maybe
+      //navigate back to the map maybe#
+      //this.navCtrl.setRoot(this.navCtrl.getActive().component);
     })
   }
 
-  resetAlarm()
+   resetAlarm()
   {
     this.device.alarm = "0";
     //function in th provider
@@ -81,6 +77,5 @@ export class EditDevicePage implements OnInit {
       //navigate back to the map maybe
     })
   }
-
 
 }
