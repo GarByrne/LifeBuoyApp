@@ -29,20 +29,21 @@ public loadedCountryList:Array<any>;
     private afDatabase : AngularFireDatabase,
     private afAuth : AngularFireAuth
   ) { 
+    this.initializeItems();
   }
   
-  initializeItems(): void {
+  initializeItems(){
     this.countryList = this.loadedCountryList;
   }
 
 
-  getItems(searchbar) {
+  getItems(ev: any) {
     // Reset items back to all of the items
     this.initializeItems();
-  
+    
     // set q to the value of the searchbar
-    var q = searchbar.srcElement.value;
-  
+    var q = ev.target.value;
+    console.log("q", q);
   
     // if the value is an empty string don't filter the items
     if (!q) {
