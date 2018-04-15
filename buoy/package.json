@@ -22,6 +22,7 @@
     "@angular/platform-browser": "5.2.9",
     "@angular/platform-browser-dynamic": "5.2.9",
     "@ionic-native/core": "4.5.3",
+    "@ionic-native/fcm": "^4.7.0",
     "@ionic-native/geolocation": "^4.6.0",
     "@ionic-native/google-maps": "^4.6.3",
     "@ionic-native/push": "^4.7.0",
@@ -31,6 +32,8 @@
     "angularfire2": "^5.0.0-rc.6.0",
     "cordova-android": "7.0.0",
     "cordova-plugin-device": "^2.0.1",
+    "cordova-plugin-fcm": "^2.1.2",
+    "cordova-plugin-firebase": "1.0.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.2.0",
@@ -57,10 +60,9 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-fcm": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }

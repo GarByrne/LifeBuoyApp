@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "443505501193",
+    "firebase_url": "https://lifebuoytracker.firebaseio.com",
+    "project_id": "lifebuoytracker",
+    "storage_bucket": "lifebuoytracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443505501193:android:6dc7b059002bafa8",
+        "android_client_info": {
+          "package_name": "com.ionicframework.buoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443505501193-rgbvb5ispuuf5agkfc4oh3n02d4eeuji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH-VSNtK7SOS6eDGtH4iv102zifcj0UyE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

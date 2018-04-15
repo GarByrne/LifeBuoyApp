@@ -12,15 +12,18 @@ import { Observable } from 'rxjs/Observable';
 import { Device } from '../../model/device.model';
 import { TabsPage } from '../tabs/tabs';
 import firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 declare var google;
+
+declare var FCMPlugin;
 var details;
 var me$;
 var markers = [];
 var user;
+var found = false;
 var number = 0;;
-
-//var unique_array = [];
+var deviceEntries;
 var map;
 
 @Component({
@@ -28,6 +31,9 @@ var map;
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
+
+  firestore = firebase.database().ref('/pushtokens');
+
 
   nowUser : string;
   user = {} as User;
@@ -49,10 +55,16 @@ export class HomePage implements OnInit {
     public navCtrl: NavController,
     private afAuth : AngularFireAuth,
     private platform: Platform,
+    public afd: AngularFireDatabase,
     private deviceProvider: DeviceProvider,
     
 
-  ) {}
+  ) {
+
+    this.tokensetup().then((token) => {
+      this.storetoken(token);
+    })
+  }
 
   ngOnInit(){
     this.afAuth.authState.subscribe((res)=>{
@@ -66,8 +78,82 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter()
   {
-    this.loadMap();
+    this.loadMap()
   }
+
+
+ionViewDidLoad(){
+
+
+  FCMPlugin.onNotification(function(data){
+    if(data.wasTapped){
+      //Notification was received on device tray and tapped by the user.
+      alert( JSON.stringify(data) );
+    }else{
+      //Notification was received in foreground. Maybe the user needs to be notified.
+      alert( JSON.stringify(data) );
+    }
+    });
+
+FCMPlugin.onTokenRefresh(function(token){
+    alert( token );
+});    
+  }
+
+  tokensetup() {
+    var promise = new Promise((resolve, reject) => {
+      FCMPlugin.getToken(function(token){
+    resolve(token);
+      }, (err) => {
+        reject(err);
+});
+    })
+    return promise;
+  }
+
+  storetoken(t) 
+  {
+    deviceEntries = firebase.database().ref('/pushtokens');
+        
+      deviceEntries.orderByChild("uid").on("value" ,function(data)
+          {
+
+            data.forEach(function(snap)
+            {
+              var result = snap.val();
+              if(result.uid == firebase.auth().currentUser.uid)
+              {
+                found = true;
+              }
+              
+            })
+            runAfterQuery(found);
+
+           })
+  
+function runAfterQuery(f)
+{
+  if(f == false)
+  {
+    
+    firebase.database().ref('pushtokens/' + firebase.auth().currentUser.uid).set({
+      uid:firebase.auth().currentUser.uid,
+      devtoken: t,
+      email: me$
+    });
+
+  }
+  else{
+    firebase.database().ref("pushtokens/"+firebase.auth().currentUser.uid).update({ devtoken: t });
+
+  }
+
+
+
+}
+ 
+}
+
   
   loadMap(){
     this.afAuth.authState.subscribe((res)=>{
@@ -185,29 +271,6 @@ export class HomePage implements OnInit {
 )
 
   }
-
-
-  // setMapOnAll(map) {
-  //   let unique_array = [];
-  //   let new_array = [];
-
-  //   new_array = markers.reverse();
-  //   console.log("new", new_array);
-
-  //   for(let i = 0 ;i < new_array.length ; i++){
-  //       if(unique_array.indexOf(new_array[i]) == -1){
-  //           unique_array.push(new_array[i]);
-  //       }
-  //   }
-
-  //   console.log("unique", unique_array);
-    
-  //   for (var k = unique_array.length-1; k > 0; k--) {
-  //     unique_array[k].setMap(map);
-  //   }
-
-  //   console.log("marker", markers);
-  // }
 
    addInfoWindow(marker, content){
  

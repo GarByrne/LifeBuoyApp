@@ -13,9 +13,11 @@ import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { DeviceProvider } from '../providers/device/device';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 import { DeviceListPage } from '../pages/device-list/device-list';
 import { Geolocation } from '@ionic-native/geolocation';
+
+
 
 
 @NgModule({
@@ -32,7 +34,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(Firebase_config),
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,6 +49,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     Geolocation,
+    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DeviceProvider
   ]
