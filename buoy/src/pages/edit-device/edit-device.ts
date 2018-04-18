@@ -68,7 +68,7 @@ export class EditDevicePage implements OnInit {
 
    resetAlarm()
   {
-    this.device.alarm = "0";
+    this.device.alarm = "00000000";
     //function in th provider
     //updating this instance of device
     this.deviceProvider.updateDevice(this.device).then(()=>{

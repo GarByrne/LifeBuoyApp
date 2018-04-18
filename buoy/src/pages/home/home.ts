@@ -199,7 +199,7 @@ function runAfterQuery(f)
               };
 
 
-              if(details.alrm === "0")
+              if(details.alrm === "00000000")
                 {
                   let latLng = new google.maps.LatLng(details.lat, details.lng);
                    var marker = new google.maps.Marker({

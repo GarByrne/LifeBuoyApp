@@ -4,7 +4,7 @@ import { DeviceListPage } from './device-list';
 
 @NgModule({
   declarations: [
-    DeviceListPage,
+    //DeviceListPage,
   ],
   imports: [
     IonicPageModule.forChild(DeviceListPage),
