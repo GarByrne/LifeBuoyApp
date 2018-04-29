@@ -3,8 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Device } from '../../model/device.model';
 import { DeviceProvider } from '../../providers/device/device';
 import { Geolocation } from '@ionic-native/geolocation';
-import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -18,8 +17,10 @@ export class EditDevicePage implements OnInit {
   // these need to be set to the current gps cords like before
   currentLat : any;
   currentLong : any;
+  show : boolean = false;
 
   constructor(
+    public alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private deviceProvider: DeviceProvider,
@@ -50,6 +51,50 @@ export class EditDevicePage implements OnInit {
     });
   }
 
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Update Position?',
+      message: 'Do you want to update this devices Position?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Update',
+          handler: () => {
+            this.update();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  showConfirmReset() {
+    let confirm2 = this.alertCtrl.create({
+      title: 'Reset Alarm?',
+      message: 'Do you want to reset this Devices alarm?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Reset',
+          handler: () => {
+            this.resetAlarm();
+          }
+        }
+      ]
+    });
+    confirm2.present();
+  }
+
   update() {
 
     // this is just setting them to change 
@@ -62,7 +107,6 @@ export class EditDevicePage implements OnInit {
       //put in a toast message here to let them know it was updated
     }).then(()=>{
       //navigate back to the map maybe#
-      //this.navCtrl.setRoot(this.navCtrl.getActive().component);
     })
   }
 
@@ -75,6 +119,7 @@ export class EditDevicePage implements OnInit {
       //put in a toast message here to let them know it was updated
     }).then(()=>{
       //navigate back to the map maybe
+ 
     })
   }
 

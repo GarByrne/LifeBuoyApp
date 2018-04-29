@@ -4,6 +4,7 @@ import { RegisterPage } from '../register/register';
 import { User } from '../../model/user.model';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
 
-  
+
   user = {} as User;
   errorMessage;
   loggedIn;
@@ -27,7 +28,6 @@ export class LoginPage {
           this.navCtrl.setRoot(TabsPage);
         
       }else{
-        console.log('is not user')
         // No user is signed in.
       }
   
@@ -45,8 +45,7 @@ export class LoginPage {
   registerPage() {
     this.navCtrl.push(RegisterPage);
   }
-
-
+  
   //fix to the login 
   loginUser(user: User) {
     this.afAuth.auth.signInWithEmailAndPassword(user.email.valueOf(), user.password.valueOf())

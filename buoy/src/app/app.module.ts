@@ -7,18 +7,15 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import{Firebase_config} from './app.firebse.config';
+import { Firebase_config} from './app.firebse.config';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { DeviceProvider } from '../providers/device/device';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { DeviceListPage } from '../pages/device-list/device-list';
 import { Geolocation } from '@ionic-native/geolocation';
-
-
-
 
 @NgModule({
   declarations: [
@@ -28,6 +25,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     LoginPage,
     DeviceListPage,
     TabsPage
+
   ],
   imports: [
     BrowserModule,

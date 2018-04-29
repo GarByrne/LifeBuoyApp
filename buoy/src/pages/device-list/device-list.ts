@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/observable';
 import { Device } from '../../model/device.model';
 import { DeviceProvider } from '../../providers/device/device';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import firebase from 'firebase';
-
 
 @Component({
   selector: 'page-device-list',
@@ -26,7 +23,6 @@ public loadedCountryList:Array<any>;
     public navCtrl: NavController,
     public navParams: NavParams,
     private deviceProvider: DeviceProvider,
-    private afDatabase : AngularFireDatabase,
     private afAuth : AngularFireAuth
   ) { 
     this.initializeItems();
@@ -51,8 +47,8 @@ public loadedCountryList:Array<any>;
     }
   
     this.countryList = this.countryList.filter((v) => {
-      if(v.device && q) {
-        if (v.device.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+      if(v.deviceID && q) {
+        if (v.deviceID.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
         return false;
@@ -82,10 +78,7 @@ ngOnInit(){
 
         
         countries.push(snap);
-        return false;
-     
-          
-          
+        return false;    
         
       });
       console.log(countries);
@@ -93,18 +86,10 @@ ngOnInit(){
       this.loadedCountryList = countries;
     });
 
-
     //gets the current user email
     this.me$ = this.afAuth.auth.currentUser.email;
     console.log(this.me$);
     console.log(this.deviceList$);
 
 }
-
-
-
-
-  
-
-
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
-import { RegisterPage } from '../register/register';
 import { NavController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../login/login';

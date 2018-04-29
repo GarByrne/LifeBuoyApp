@@ -2,7 +2,7 @@ export interface Device {
     alarm : string;
     key? : string,
     data : string,
-    device : string,
+    deviceID : string,
     email : string,
     lat : string,
     lng : string,

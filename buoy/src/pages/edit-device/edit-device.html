@@ -1,25 +1,48 @@
 <ion-header>
 
-    <ion-navbar>
+    <ion-navbar hideBackButton  color = "light">
         <ion-title>Device Info Page</ion-title>
     </ion-navbar>
 
 </ion-header>
 
+<ion-content padding >
+        <ion-card >
+                <ion-list >
 
-<ion-content padding>
-    <ion-card>
-        Your current Latitude : {{currentLat}} 
-        <br>Your current Longtitude : {{currentLong}}
+                <ion-item color = "light">
+                <ion-icon name="ios-help-buoy" item-start></ion-icon>
+                Device ID : {{device.deviceID}}
+                </ion-item>
 
-        <br> Device ID : {{device.device}}
-        <br> Device Latitude : {{device.lat}}
-        <br> Device Longtitude :{{device.lng}}
-        <br> Alarm :{{device.alarm}}
+                <ion-item color = "light">
+                <ion-icon name="ios-compass-outline" item-start></ion-icon>
+                Device Latitude : {{device.lat}}
+                </ion-item>
+        
+                <ion-item color = "light">
+                <ion-icon name="ios-compass-outline" item-start></ion-icon>
+                Device Longtitude :{{device.lng}}
+                </ion-item>
 
-        <br>
+                <ion-item color = "light">
+                <ion-icon name="md-alarm" item-start></ion-icon>
+                Device Alarm :{{device.alarm}}
+                </ion-item>
+                  
+                <ion-item color = "light">
+                <ion-icon name="ios-compass-outline" item-start></ion-icon>
+                Current Latitude : {{currentLat}} 
+                </ion-item>
+                    
+                <ion-item color = "light">
+                <ion-icon name="ios-compass-outline" item-start></ion-icon>
+                Current Longtitude : {{currentLong}}
+                </ion-item>
+ 
+            </ion-list>
+            </ion-card>
 
-        <button ion-button outline item-end icon-left (click)="update()">Update Position</button>
-        <button ion-button outline item-end icon-left (click)="resetAlarm()">Reset Alarm</button>
-    </ion-card>
+        <button ion-button color="light" full round item-end icon-left (click)="showConfirm()">Update Position</button>
+        <button ion-button color="light" full round item-end icon-left (click)="showConfirmReset()">Reset Alarm</button>
 </ion-content>
